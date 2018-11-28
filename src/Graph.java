@@ -1,10 +1,7 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
-public class Graph implements Iterable<Edge>{
+public class Graph { // Iterable supprimer
     // classe de graphe non orientés permettant de manipuler
     // en même temps des arcs (orientés)
     // pour pouvoir stocker un arbre couvrant, en plus du graphe
@@ -12,40 +9,52 @@ public class Graph implements Iterable<Edge>{
 	int order;
 	int edgeCardinality;
 	
-	ArrayList<LinkedList<Edge>> adjacency;
-	ArrayList<LinkedList<Arc>> inAdjacency;
-	ArrayList<LinkedList<Arc>> outAdjacency;
-	
+	ArrayList<LinkedList<Edge>> adjacency; // liste des arretes non orienté
+	// ArrayList<LinkedList<Arc>> inAdjacency;
+	ArrayList<LinkedList<Arc>> outAdjacency; //  graph orienté
+
+
+	// index plus petit que order  et appartient a arraylist
 	public boolean isVertex(int index) {
-	    // à remplir
+		return index  < order &;
 	}
 	
 	public <T> ArrayList<LinkedList<T>> makeList(int size) {
-		ArrayList<LinkedList<T>> res = new ArrayList<>(size);
+		ArrayList<LinkedList<T>> resultat = new ArrayList<>(size);
 		for(int i = 0; i <= size; i++) {
-			res.add(null);			
+			resultat.add(null);
 		}
-		return res;
+		return resultat;
 	}
 	
-	public Graph(int upperBound) {
-	    // à remplir
+	public Graph(int upperBound){
+		order = upperBound;
+
 	}
 	
 	public void addVertex(int indexVertex) {
-	    // à remplir
+
 	}
-	
+
+
+	//sommet existe ou si il n'existe pas il l'ajoute
 	public void ensureVertex(int indexVertex) {
-	    // à remplir
-	}	
-	
+
+	}
+
+
+	// ajoute un arc a la liste des sommets
 	public void addArc(Arc arc) {
-	    // à remplir
+		outAdjacency.get(arc.getSource()).add(arc);
 	}
-	
+
+	//
 	public void addEdge(Edge e) {
-	    // à remplir
+
 	}
-	
+
+	public List<Arc> outNeighbours(int vertex) {
+		return ;
+	}
+
 }

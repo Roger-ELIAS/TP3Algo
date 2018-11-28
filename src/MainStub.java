@@ -18,8 +18,7 @@ public class MainStub {
 		// TOOO : modifier l'algorithme utiliser ici.
 		
 		// Non-random BFS
-		ArrayList<Arc> randomArcTree = 
-				BreadthFirstSearch.generateTree(graph,0);
+		ArrayList<Arc> randomArcTree = BreadthFirstSearch.generateTree(graph,0);
 		randomTree = new ArrayList<>();
 		for (Arc a : randomArcTree) randomTree.add(a.support);
 	
