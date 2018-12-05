@@ -16,7 +16,7 @@ public class Graph { // Iterable supprimer
 
 	// index plus petit que order  et appartient a arraylist
 	public boolean isVertex(int index) {
-		return index  < order &;
+		return index <= adjacency.size() && adjacency.get(index)!=null && index>=0;
 	}
 	
 	public <T> ArrayList<LinkedList<T>> makeList(int size) {
@@ -28,18 +28,26 @@ public class Graph { // Iterable supprimer
 	}
 	
 	public Graph(int upperBound){
-		order = upperBound;
-
+		order = 0;
+		adjacency= makeList(upperBound);
+		outAdjacency = makeList(upperBound);
 	}
 	
 	public void addVertex(int indexVertex) {
-
+		adjacency.ensureCapacity(indexVertex);
+		if(isVertex(indexVertex))
+			return;
+		order++;
+		adjacency.set(indexVertex,new LinkedList<Edge>());
+		outAdjacency.set(indexVertex, new LinkedList<Arc>());
 	}
 
 
 	//sommet existe ou si il n'existe pas il l'ajoute
 	public void ensureVertex(int indexVertex) {
-
+		if (!isVertex(indexVertex)){
+			addVertex(indexVertex);
+		}
 	}
 
 
@@ -50,11 +58,15 @@ public class Graph { // Iterable supprimer
 
 	//
 	public void addEdge(Edge e) {
-
+		addVertex(e.dest);
+		adjacency.get(e.dest).add(e);
+		addVertex(e.source);
+		adjacency.get(e.source).add(e);
+		addArc(new Arc(e,false));
+		addArc(new Arc(e,true));
 	}
 
-	public List<Arc> outNeighbours(int vertex) {
-		return ;
+	public List<Arc> outAdjacency(int vertex) {
+		return outAdjacency.get(vertex);
 	}
-
 }

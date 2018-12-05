@@ -33,7 +33,6 @@ public class MainStub {
 		Grid grid = null;
 		grid = new Grid(1920/11,1080/11);
 		Graph graph = grid.graph;
-		
 //		Graph graph = new Complete(400).graph;
 		
 //		Graph graph = new ErdosRenyi(1_000, 100).graph;
@@ -53,7 +52,7 @@ public class MainStub {
 		long startingTime = System.nanoTime();
 		for (int i = 0; i < nbrOfSamples; i++) {
 			randomTree= genTree(graph);
-
+			System.out.println(randomTree.size());
 			rooted = new RootedTree(randomTree,0);
 //			rooted.printStats();
 			diameterSum = diameterSum + rooted.getDiameter();

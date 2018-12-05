@@ -12,7 +12,7 @@ public class Parcours {
 	ArrayList<Arc> predecessor;
 	
 	private void etendsFrontiere(int sommet) {
-		for (Arc a : graph.outNeighbours(sommet))
+		for (Arc a : graph.outAdjacency(sommet))
 			frontier.add(a);
 	}
 	
