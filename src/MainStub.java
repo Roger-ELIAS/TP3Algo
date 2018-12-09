@@ -18,7 +18,7 @@ public class MainStub {
 		// TOOO : modifier l'algorithme utiliser ici.
 		
 		// Non-random BFS
-		ArrayList<Arc> randomArcTree = BreadthFirstSearch.generateTree(graph,0);
+		ArrayList<Arc> randomArcTree = Parcours.algo(graph,0);
 		randomTree = new ArrayList<>();
 		for (Arc a : randomArcTree) randomTree.add(a.support);
 	
@@ -50,20 +50,23 @@ public class MainStub {
 		RootedTree rooted = null;
 
 		long startingTime = System.nanoTime();
-		for (int i = 0; i < nbrOfSamples; i++) {
-			randomTree= genTree(graph);
-			System.out.println(randomTree.size());
-			rooted = new RootedTree(randomTree,0);
-//			rooted.printStats();
-			diameterSum = diameterSum + rooted.getDiameter();
-			eccentricitySum = eccentricitySum + rooted.getAverageEccentricity();
-			wienerSum = wienerSum + rooted.getWienerIndex();
-			
-			degrees = rooted.getDegreeDistribution(4);
-			for (int j = 1; j < 5; j++) {
-				degreesSum[j] = degreesSum[j] + degrees[j];
-			}
-		}		
+		try{
+			for (int i = 0; i < nbrOfSamples; i++) {
+				randomTree= genTree(graph);
+				System.out.println(randomTree.size());
+				rooted = new RootedTree(randomTree,0);
+	//			rooted.printStats();
+				diameterSum = diameterSum + rooted.getDiameter();
+				eccentricitySum = eccentricitySum + rooted.getAverageEccentricity();
+				wienerSum = wienerSum + rooted.getWienerIndex();
+				
+				degrees = rooted.getDegreeDistribution(4);
+				for (int j = 1; j < 5; j++) {
+					degreesSum[j] = degreesSum[j] + degrees[j];
+				}
+			}		
+		}catch(Exception e){
+		}
 		long delay = System.nanoTime() - startingTime;
 		
 		System.out.println("On " + nbrOfSamples + " samples:");
@@ -102,15 +105,16 @@ public class MainStub {
 		window.pack();
 		window.setLocationRelativeTo(null);
 
-
-		for (final Edge e : randomTree) {
-					laby.addEdge(e);
+		if(randomTree!=null){
+			for (final Edge e : randomTree) {
+							laby.addEdge(e);
+			}
 		}
 		laby.drawLabyrinth();
 
 		window.setVisible(true);
 		
-		// Pour générer un fichier image.
+		// Pour gÃ©nÃ©rer un fichier image.
 //		try {
 //			laby.saveImage("resources/random.png");
 //		} catch (IOException e1) {
