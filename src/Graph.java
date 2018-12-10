@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class Graph { // Iterable supprimer
+public class Graph implements Iterable<Edge>{ // Iterable supprimer
     // classe de graphe non orientés permettant de manipuler
     // en même temps des arcs (orientés)
     // pour pouvoir stocker un arbre couvrant, en plus du graphe
@@ -58,15 +58,47 @@ public class Graph { // Iterable supprimer
 
 	//
 	public void addEdge(Edge e) {
-		addVertex(e.dest);
+		ensureVertex(e.dest);
 		adjacency.get(e.dest).add(e);
-		addVertex(e.source);
+		ensureVertex(e.source);
 		adjacency.get(e.source).add(e);
 		addArc(new Arc(e,false));
 		addArc(new Arc(e,true));
 	}
 
+
 	public List<Arc> outAdjacency(int vertex) {
 		return outAdjacency.get(vertex);
+	}
+
+
+	private class EdgeIterator implements Iterator<Edge>{
+		private int index;
+		private int index2;
+
+		public EdgeIterator() {
+			index = 0;
+			index2 = 0;
+		}
+		@Override
+		public boolean hasNext() {
+			return adjacency.get(index).get(index2)!=adjacency.get(index).getLast();
+		}
+		@Override
+		public Edge next() {
+			Edge edge;
+			edge = adjacency.get(index).get(index2);
+			index++;
+			if(!hasNext()){
+				index ++;
+				index2 = 0;
+			}
+			return edge;
+		}
+
+	}
+
+	public Iterator<Edge> iterator() {
+		return new EdgeIterator();
 	}
 }

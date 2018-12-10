@@ -5,7 +5,6 @@ import java.util.Queue;
 
 
 public class BreadthFirstSearch {
-
     Graph graphe;
     Queue<Arc> file;
     ArrayList<Arc> arbre;
@@ -22,7 +21,7 @@ public class BreadthFirstSearch {
             explore(file.poll());
         }
     }
-    
+
     private void explore(Arc nextArc) {
         if (visite.get(nextArc.getDest())) return;
         visite.set(nextArc.getDest());
@@ -38,9 +37,8 @@ public class BreadthFirstSearch {
     }
 
     public static ArrayList<Arc> generateTree(Graph graphe, int racine) {
-        BreadthFirstSearch bfs = new BreadthFirstSearch(graphe);
-        bfs.start(racine);
-        return bfs.arbre;
+        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(graphe);
+        breadthFirstSearch.start(racine);
+        return breadthFirstSearch.arbre;
     }
-
 }
