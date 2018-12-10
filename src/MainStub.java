@@ -1,10 +1,8 @@
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 
 public class MainStub
@@ -25,27 +23,25 @@ public class MainStub
 /*		ArrayList<Edge> randomTree;
 
 		// Non-random BFS
-
+		//ArrayList<Arc> randomArcTree = Parcours.algo(graph,0);
 		//ArrayList<Arc> randomArcTree = BreadthFirstSearch.generateTree(graph,0);
 		//ArrayList<Arc> randomArcTree = Wilson.generateTree(graph);
 		ArrayList<Arc> randomArcTree = AldousBroder.generateTree(graph);
 
 		randomTree = new ArrayList<>();
 
-
+		//randomArcTree.add(new Arc(new Edge(0,1,0.0), false));
+		for (Arc a : randomArcTree)
+		{
+			if(a != null) //TODO : Possible de rectifier Ã§a ? :> probleme avec Parcours
+				randomTree.add(a.support);
+		}
+		return randomTree;
 */
 		ArrayList<Edge> randomTree;
-
 		//randomTree = Wilson.generateTree(graph);
-		//randomTree = AldousBroder.generateTree(graph);
-		ArrayList<Edge> randomArcTree = AldousBroder.generateTree(graph);
+		randomTree = AldousBroder.generateTree(graph);
 
-		randomTree = new ArrayList<>();
-//		for (Arc a : randomArcTree)
-//		{
-//			if(a != null) //TODO : Possible de rectifier Ã§a ? :> probleme avec Parcours
-//				randomTree.add(a.support);
-//		}
 		return randomTree;
 	}
 
@@ -142,5 +138,6 @@ public class MainStub
 //		}
 
 	}
-}
 
+
+}

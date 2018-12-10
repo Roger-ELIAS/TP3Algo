@@ -16,20 +16,17 @@ public class AldousBroder {
 
     private void explore() {
         int current = (int)(Math.random()*this.graph.order+1);
-        List<Arc> adjacency;
         Arc currentArc;
         visite.set(current);
 
-        while(arbre.size() < graph.order) {
-            adjacency  = graph.outAdjacency(current);
+        while(arbre.size() < graph.order-1) {
+            List<Arc> adjacency  = graph.outAdjacency(current);
             currentArc = adjacency.get(ThreadLocalRandom.current().nextInt(0, adjacency.size()));
-            arbre.add(currentArc.support);
             if(!visite.get(currentArc.getDest())) {
                 arbre.add(currentArc.support);
                 visite.set(currentArc.getDest());
             }
             current = currentArc.getDest();
-            System.out.println(arbre.size());
         }
     }
 
