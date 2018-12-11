@@ -7,41 +7,27 @@ import javax.swing.JFrame;
 
 public class MainStub
 {
-
 	@SuppressWarnings("unused")
 	private final static Random gen = new Random();
 
-	/**
-	 * GÃ©nÃ¨re une liste d'incidence alÃ©atoire
-	 * Ã  partir d'un parcours en largeur sur des arcs
-	 * Ã  poids alÃ©atoire.
-	 * @param graph Le graphe Ã  partir duquel gÃ©nÃ©rer la liste
-	 * @return La liste d'Edge Ã  crÃ©er alÃ©atoirement
-	 */
 	public static ArrayList<Edge> genTree(Graph graph)
 	{
-/*		ArrayList<Edge> randomTree;
+		ArrayList<Edge> randomTree = new ArrayList<>();
 
 		// Non-random BFS
 		//ArrayList<Arc> randomArcTree = Parcours.algo(graph,0);
 		//ArrayList<Arc> randomArcTree = BreadthFirstSearch.generateTree(graph,0);
 		//ArrayList<Arc> randomArcTree = Wilson.generateTree(graph);
-		ArrayList<Arc> randomArcTree = AldousBroder.generateTree(graph);
-
-		randomTree = new ArrayList<>();
-
-		//randomArcTree.add(new Arc(new Edge(0,1,0.0), false));
+	//	randomTree = AldousBroder.generateTree(graph);
+//
+//		randomArcTree.add(new Arc(new Edge(0,1,0.0), false));
+//
+		ArrayList<Arc> randomArcTree = ParcoursAleatoire.generateTree(graph);
 		for (Arc a : randomArcTree)
 		{
 			if(a != null) //TODO : Possible de rectifier Ã§a ? :> probleme avec Parcours
 				randomTree.add(a.support);
 		}
-		return randomTree;
-*/
-		ArrayList<Edge> randomTree;
-		//randomTree = Wilson.generateTree(graph);
-		randomTree = AldousBroder.generateTree(graph);
-
 		return randomTree;
 	}
 

@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AldousBroder {
@@ -14,25 +12,29 @@ public class AldousBroder {
         this.visite = new BitSet(graph.order+1);
     }
 
-    private void explore() {
-        int current = (int)(Math.random()*this.graph.order+1);
-        Arc currentArc;
-        visite.set(current);
+    private void aldous() {
+        int sommetActuel = (int)(Math.random()*this.graph.order+1);
+        visite.set(sommetActuel);
 
         while(arbre.size() < graph.order-1) {
-            List<Arc> adjacency  = graph.outAdjacency(current);
-            currentArc = adjacency.get(ThreadLocalRandom.current().nextInt(0, adjacency.size()));
-            if(!visite.get(currentArc.getDest())) {
-                arbre.add(currentArc.support);
-                visite.set(currentArc.getDest());
-            }
-            current = currentArc.getDest();
+            List<Arc> adjacency  = graph.outAdjacency(sommetActuel);
+            Arc arc = adjacency.get((int)(Math.random()*adjacency.size()));
+            visit(arc);
+            sommetActuel=arc.getDest();
+
+        }
+    }
+
+    private void visit(Arc arc){
+        if(!visite.get(arc.getDest())) {
+            arbre.add(arc.support);
+            visite.set(arc.getDest());
         }
     }
 
     public static ArrayList<Edge> generateTree(Graph graph) {
         AldousBroder algo = new AldousBroder(graph);
-        algo.explore();
+        algo.aldous();
         return algo.arbre;
     }
 }
