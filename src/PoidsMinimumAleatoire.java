@@ -10,21 +10,15 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PoidsMinimumAleatoire {
 
     Graph graphe;
-    PriorityQueue<Arc> file;
-    ArrayList<Arc> arbre;
+    PriorityQueue<Edge> file;
+    ArrayList<Edge> arbre;
     BitSet visite;
-    int[] cout;
-    
-    private void push(int vertex) {
-        for (Arc arc : graphe.outAdjacency(vertex)) file.offer(arc);
-    }
+    double[] cout;
 
     private void start(int racine) {
     	cout[racine]=0;
-        visite.set(racine);
-        push(racine);
-        for(LinkedList<Arc> aa: graphe.outAdjacency){
-			for(Arc a: aa){
+        for(LinkedList<Edge> aa: graphe.adjacency){
+			for(Edge a: aa){
 				file.add(a);
 			}
 		}
@@ -33,57 +27,68 @@ public class PoidsMinimumAleatoire {
         }
     }
     
-    private void explore(Arc nextArc) {
-    	
-        if (visite.get(nextArc.getDest())) return;
-        visite.set(nextArc.getDest());
-        arbre.add(nextArc);
-        push(nextArc.getDest());
+    private void explore(Edge e) {
+    	if (visite.get(e.getSource())) return;
+    	visite.set(e.getSource());
+    	for(Edge ee: graphe.adjacency(e.getSource())){
+    		System.out.println("cout:"+cout[e.getDest()]);
+    		System.out.println("weight diff:"+(ee.weight));
+        	if(cout[ee.getSource()]>ee.weight){
+        		explore(ee);
+        		cout[ee.getDest()]=(ee.weight);
+        	}	
+    	}
+        arbre.add(e);
+    	/*
+        if (visite.get(nextEdge.getDest())) return;
+        visite.set(nextEdge.getDest());
+        arbre.add(nextEdge);
+        //push(nextEdge.getDest());
+    	*/
     }
 
-    private PoidsMinimumAleatoire () {
-    	Comparator<Arc> comparator = new Comparator<Arc>() {
-			public int compare(Arc arg0, Arc arg1) {
-				return cout[arg0.getSource()]-cout[arg1.getSource()];
-			}
-        };
-        this.file = new PriorityQueue<Arc>(comparator);
-        this.arbre = new ArrayList<Arc>();
-        this.visite = new BitSet(graphe.order);
-        this.cout = new int[graphe.order];
-        for(int i=0;i<graphe.order;++i)
-        	cout[i]=50000;
-    }
-    
-    private void setGraphe(Graph graphe){
+    private PoidsMinimumAleatoire (Graph graphe) {
         this.graphe = graphe;
+        this.file = new PriorityQueue<Edge>();
+        this.arbre = new ArrayList<Edge>();
+        this.visite = new BitSet(graphe.order);
+        this.cout = new double[graphe.order];
+        for(int i=0;i<graphe.order;++i)
+        	cout[i]=1;
     }
     
-	private Graph poidsAleatoire(Graph graphe2) {
-		for(LinkedList<Edge> ee: graphe.adjacency){
-			for(Edge e: ee){
-				e.weight = ThreadLocalRandom.current().nextDouble(0, 1);
+
+	private static Graph poidsAleatoire(Graph graphe2) {
+		for(LinkedList<Edge> aa: graphe2.adjacency){
+			for(Edge a: aa){
+				a.weight = ThreadLocalRandom.current().nextDouble(0, 1);
 			}
 		}
+		/*
+		for(LinkedList<Edge> aa: graphe2.outAdjacency){
+			for(Edge a: aa){
+				System.out.println(a.support.weight);
+				
+			}
+		}
+		*/
 		return graphe2;
 	}
-	
-	private int voisinPlusPetitPoid(ArrayList<Arc> voisins){
+	/*
+	private int voisinPlusPetitPoid(ArrayList<Edge> voisins){
 		double min = 1;
 		int sce = 0;
-		for(Arc a : voisins){
-			if(a.support.weight<min && visite.get(a.getSource())){
-				min=a.support.weight;
+		for(Edge a : voisins){
+			if(a.weight<min && visite.get(a.getSource())){
+				min=a.weight;
 				sce = a.getSource();
 			}
 		}
 		return sce;
 	}
-	
-    public static ArrayList<Arc> generateTree(Graph graphe, int racine) {
-        PoidsMinimumAleatoire pma = new PoidsMinimumAleatoire();
-        Graph graphepoidrandom = pma.poidsAleatoire(graphe);
-        pma.setGraphe(graphepoidrandom);
+	*/
+    public static ArrayList<Edge> generateTree(Graph graphe, int racine) {
+        PoidsMinimumAleatoire pma = new PoidsMinimumAleatoire(PoidsMinimumAleatoire.poidsAleatoire(graphe));
         pma.start(racine);
         return pma.arbre;
     }
